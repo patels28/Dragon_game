@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<design>
+    <hotel id="hotelxml">
+        <row price="120">
+            <col class="notseat"></col>
+            <col class="empty">1</col>
+            <col class="notseat"></col>
+             <col class="notseat"></col>
+            <col class="notseat"></col>
+           <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+        </row>
+        
+        <row price="150">
+           <col class="notseat"></col>
+            <col class="notseat"></col>
+           <col class="empty">2</col>
+            <col class="notseat"></col>
+			<col class="notseat"></col>
+           <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+        </row>
+        <row price="120">
+            <col class="notseat"></col>
+            <col class="empty">3</col>
+             <col class="notseat"></col>
+            <col class="notseat"></col>
+              <col class="notseat"></col>
+           <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>	
+        </row>
+        <row price="100">
+            <col class="notseat"></col>
+			<col class="empty">4</col>           
+		   <col class="notseat"></col>
+           <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+        </row>
+       <row price="100">
+            <col class="notseat"></col>
+			<col class="empty">5</col>           
+		   <col class="notseat"></col>
+           <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+        </row>
+         <row price="100">
+            <col class="notseat"></col>
+			<col class="empty">6</col>           
+		   <col class="notseat"></col>
+           <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+        </row>
+         <row price="100">
+            <col class="notseat"></col>
+			<col class="empty">7</col>           
+		   <col class="notseat"></col>
+           <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+        </row>
+        <row price="100">
+            <col class="notseat"></col>
+			<col class="empty">8</col>           
+		   <col class="notseat"></col>
+           <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+        </row>
+         <row price="100">
+            <col class="notseat"></col>
+			<col class="empty">9</col>           
+		   <col class="notseat"></col>
+           <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+        </row>
+         <row price="100">
+            <col class="notseat"></col>
+			<col class="empty">10</col>           
+		   <col class="notseat"></col>
+           <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+        </row>
+        <row price="100">
+            <col class="notseat"></col>
+			<col class="empty">11</col>           
+		   <col class="notseat"></col>
+           <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+        </row>
+        <row price="200">
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+           
+            <col class="notseat"></col>
+			<col class="empty">Suits</col>
+              <col class="notseat"></col>
+           <col class="notseat"></col>
+            <col class="notseat"></col>
+            <col class="notseat"></col>
+        </row>
+    </hotel>
+   
+</design>

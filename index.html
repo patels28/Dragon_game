@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Game</title>
+    <script src="jquery-1.7.1.js"></script>
+    <script src="jquery.hotkeys.js"></script>
+    <script src="key_status.js"></script>
+    <script src="sprite.js"></script>
+    
+
+</head>
+<body>
+	<canvas id="myGameBoard" width="1200" height="600" style="border:solid 1px black;"></canvas>
+	<script>
+		var canvas = document.getElementById("myGameBoard").getContext("2d");
+		var CANVAS_WIDTH = document.getElementById("myGameBoard").getAttribute("width");
+		var CANVAS_HEIGHT = document.getElementById("myGameBoard").getAttribute("height");
+
+		var background = new Image();
+		background.src = "bg_image.png";
+
+
+		var player = {
+		  color: "#00A",
+		  x: 220,
+		  y: 270,
+		  width: 300,
+		  height: 138,
+		  position:"right",
+		  draw: function() {
+		    canvas.fillStyle = this.color;
+		    canvas.fillRect(this.x, this.y, this.width, this.height);
+		  }
+		  
+		};
+
+		var weapon = {
+	  	  x: 518,
+	  	  y: 342,
+	      width: 100,
+	      height: 71,
+	      draw: function(){
+	      	canvas.fillStyle = this.color;
+	      	canvas.fillRect(this.x, this.y, this.width, this.height);
+	      }
+		}
+
+		
+		var xp_add = 1;
+		var yp_add = 1;
+		function moveEyes() {
+			xp += xp_add;
+			yp += yp_add;
+			if (xp > 2 || xp < 0) xp_add=-xp_add;
+			if (yp > 2 || xp < 0) yp_add=-yp_add;
+			doEyes(xp, yp);
+		}
+
+
+		var eyeX = 500;
+		var eyeY = 370;
+		function drawEyes() {
+			canvas.beginPath();
+			canvas.arc(eyeX, eyeY, 5, 0, Math.PI * 2, true);
+			canvas.lineWidth="5";
+			canvas.strokeStyle="black";
+			canvas.stroke();
+			canvas.fillStyle='rgb(255, 255, 255)';
+			canvas.fill();
+			canvas.closePath();
+		}
+
+		var pupilX = 500;
+		var pupilY = 370;
+		var xp = 2;
+		var yp = 2;
+		function doEyes(xp, yp) {
+			drawEyes();
+
+			canvas.beginPath();
+			canvas.fillStyle='black';
+			canvas.arc(pupilX + xp, pupilY + yp, 3, 0, Math.PI * 2, true);
+			canvas.fill();
+			canvas.lineWidth="3";
+			canvas.strokeStyle="orange";
+			canvas.stroke();
+			canvas.closePath();
+		}
+
+
+
+		seeds = [];
+
+		function Seed(I) {
+			I = I || {};
+			I.active = true;
+			I.seedColor = "blue";
+			I.x = CANVAS_WIDTH-30;
+			I.y = Math.random()*CANVAS_HEIGHT;
+			I.xVelocity = 2;
+			I.yVelocity = 0;
+			I.radius = 6;
+			I.maxRadius = 24;
+			I.growState = true;
+			I.restState = false;
+			I.createdDate = new Date($.now());
+			I.restTimeInitial = null;
+			
+
+			I.destroy = function() {
+			    this.active = false;
+			   
+			};
+
+
+
+
+			I.inBounds = function() {
+			return I.x >= 0 && I.x <= CANVAS_WIDTH &&
+			  I.y >= 0 && I.y <= CANVAS_HEIGHT;
+			};
+
+			I.draw = function() {
+			canvas.beginPath();
+			
+			if(I.y<24) I.y=24;
+			if(I.y>(CANVAS_HEIGHT-24)) I.y=CANVAS_HEIGHT-48;
+			
+			canvas.fillStyle = this.seedColor;
+			canvas.arc(this.x, this.y, this.radius, 0, Math.PI*2, true);
+			canvas.fill();
+			canvas.closePath();
+		};
+
+		  I.updateValues = function() {
+		   
+		    if(I.growState==true){
+			    I.radius = I.radius+0.15;
+			    var seedCurrentDate = new Date($.now());
+			    var seedGrowthTime = (seedCurrentDate-I.createdDate)/1000;
+				if(seedGrowthTime>=4){
+					I.growState=false;
+					I.radius = I.maxRadius;
+					I.restState=true;
+					I.seedColor = "skyblue";
+					I.restTimeInitial = new Date($.now());
+				}
+		    }else if(I.restState==true){
+		    	var currentDate = new Date($.now());
+		    	var seedRestTime = (currentDate-I.restTimeInitial)/1000;
+				if(seedRestTime>=3){
+					I.restState=false;
+				}
+		    }
+		    else{
+			    I.x = I.x - I.xVelocity;
+		    	I.active = I.active && I.inBounds();
+		    }
+		  };
+
+		  return I;
+		};
+
+		function update() {
+			if (keydown.left) {
+				if(player.position == "right"){
+					player.sprite = Sprite("dragon_left");
+					weapon.sprite = Sprite("flame_left");
+					weapon.x = player.x - weapon.width+2;
+					player.position = "left";
+			    	eyeX -= 261;
+			    	pupilX -= 261;
+
+					
+				}
+				if(player.x-weapon.width<=0){
+					
+				}else{
+					player.x -= 5;
+					weapon.x -= 5;
+					eyeX -= 5;
+			    	pupilX -= 5;
+				}
+			}
+
+			if (keydown.right) {
+				if(player.position == "left"){
+					player.sprite = Sprite("dragon_right");
+					weapon.sprite = Sprite("flame_right");
+					weapon.x = player.x+player.width-2;
+					player.position = "right";
+					eyeX += 261;
+					pupilX += 261	;
+
+				}
+				if((player.x+player.width+weapon.width)>=CANVAS_WIDTH){
+					
+				}else{
+					player.x += 5;
+					weapon.x += 5;
+					eyeX += 5;
+			    	pupilX += 5;
+				}
+			}
+
+			if (keydown.up) {
+				if((player.y)<=0){
+					
+				}else{
+					player.y -= 5;
+					weapon.y -= 5;
+					eyeY -= 5;
+			    	pupilY -= 5;
+				}
+			}
+
+			if (keydown.down) {
+				if((player.y+player.height)>=CANVAS_HEIGHT){
+					
+				}else{
+					player.y += 5;
+					weapon.y += 5;
+					eyeY += 5;
+			    	pupilY += 5;
+				}
+			}
+
+  			seeds.forEach(function(seed,i) {
+    			seed.updateValues();
+    			if(seed.active==false){
+    				seeds.splice(i , 1);
+    			}
+		  	});
+
+		
+			
+			if(seeds.length<7){
+				var currentTime = new Date($.now());
+				var secondDiff =  (currentTime-previousTime)/1000;
+				if(secondDiff>=1){
+				    console.log(secondDiff);
+				    seeds.push(Seed());
+				    previousTime = new Date($.now());
+				}
+			}
+
+			handleCollisions();
+
+
+
+
+		}
+
+		function draw() {
+		  canvas.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+		  drawBackground();
+		  weapon.draw();
+		  player.draw();
+		  //drawEyes();
+		  doEyes(xp, yp);
+		  moveEyes();
+		  seeds.forEach(function(seed) {
+		    seed.draw();
+		  });
+		  scoreboard();
+		  timerBoard();
+		}
+
+		player.sprite = Sprite("dragon_right");
+		weapon.sprite = Sprite("flame_right");
+        
+        player.draw = function() {
+          this.sprite.draw(canvas, this.x, this.y);
+        };
+
+        weapon.draw = function() {
+          this.sprite.draw(canvas, this.x, this.y);
+        };
+
+        function collides(Circle, Rect) {
+	    	var DeltaX = Circle.x - Math.max(Rect.x, Math.min(Circle.x, Rect.x + Rect.width));
+			var DeltaY = Circle.y - Math.max(Rect.y, Math.min(Circle.y, Rect.y + Rect.height));
+			return (DeltaX * DeltaX + DeltaY * DeltaY) < (Circle.maxRadius * Circle.maxRadius);
+		}
+
+		
+		var successful;
+		var unsuccessful;
+		function handleCollisions() {
+		  seeds.forEach(function(seed) {
+		  	console.log("colision result ::: "+collides(seed,player));
+		    if (collides(seed, player)) {
+		      seed.destroy();
+		      unsuccessful.play();
+		      gameScore--;
+		      
+		    }
+		    if (collides(seed, weapon)) {
+		      seed.destroy();
+		      successful.play();
+		      gameScore++;
+		     
+		    }
+		  });
+		}
+
+		function drawBackground(){
+			canvas.drawImage(background,0,0); 
+		}
+
+		function sound(src) {
+    		this.sound = document.createElement("audio");
+    		this.sound.src = src;
+    		this.sound.setAttribute("preload", "auto");
+    		this.sound.setAttribute("controls", "none");
+    		this.sound.style.display = "none";
+    		document.body.appendChild(this.sound);
+    		this.play = function(){
+        	this.sound.play();
+    		}
+    		this.stop = function(){
+        	this.sound.pause();
+    		}
+		}
+
+
+		var FPS;
+		var previousTime;
+		var bgm;
+		function startProgram(){
+			FPS = 30;
+			previousTime = new Date($.now());
+			setInterval (startfunction, 1000/FPS);
+			setInterval (secsfunction, 1000);
+			setInterval (minsfunction, 60000);
+			successful = new sound("happy_sound.mp3")
+			unsuccessful = new sound("sad_sound.mp3")
+			bgm = new sound("bg_sound.mp3");
+			bgm.play();
+		}
+		startProgram();
+
+		function startfunction() {
+			  update();
+			  draw();
+		}
+
+		function secsfunction() {
+			secs--;
+			if(secs==0){
+				secs=59;
+			}
+		}
+
+		function minsfunction() {
+			mins--;
+		}
+
+
+		var gameScore = 0;
+		function scoreboard() {
+			canvas.beginPath();
+			canvas.fillStyle="white"
+			canvas.fill();
+			canvas.font="30px Arial";
+			canvas.fillText("Score: "+gameScore, 15, 35);
+			canvas.closePath();
+						
+			if (gameScore < 0) {
+			alert ("GAME OVER");
+			}
+
+			if (gameScore > 20) {
+				alert ("YOU WIN");
+			}
+		}
+
+
+		var mins = 1000 * 60 * 4 / (1000 * 60);
+		var secs = 1000 * 60 / 1000;
+		function timerBoard() {
+			canvas.beginPath();
+			canvas.font="30px Arial";
+			canvas.fillText(mins+":" + secs, 1100, 35);
+			canvas.fillStyle = "black";
+			canvas.fill();
+			canvas.closePath();
+
+			if (mins < 0) {
+				alert ("YOUR TIME'S UP");
+			}
+		}
+		
+		
+</script>
+	
+</body>
+</html>

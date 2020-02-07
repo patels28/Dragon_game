@@ -1,0 +1,126 @@
+body {
+    background-color: white;
+}
+
+hotel {
+    display: block;
+}
+row {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+col:nth-child(4) {
+    margin-right: 30px;
+}
+
+col[class="booked"] {
+    background-color: red;
+}
+
+col[class="pending"] {
+    background-color: darkgreen;
+    cursor: pointer;
+}
+
+tr[class="pending"] {
+    display: none;
+}
+
+col[class="empty"] {
+    background-color: lightgreen;
+    cursor: pointer;
+}
+
+col{
+    display: inline-block;
+    height: 20px;
+    width: 80px;
+}
+
+.hide {
+    display: none;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+td {
+    display: table-cell;
+}
+th {
+    text-align: left;
+  }
+  .table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  .table > thead > tr > th,
+  .table > tbody > tr > th,
+  .table > tfoot > tr > th,
+  .table > thead > tr > td,
+  .table > tbody > tr > td,
+  .table > tfoot > tr > td {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #dddddd;
+  }
+  .table > thead > tr > th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dddddd;
+  }
+  .table > caption + thead > tr:first-child > th,
+  .table > colgroup + thead > tr:first-child > th,
+  .table > thead:first-child > tr:first-child > th,
+  .table > caption + thead > tr:first-child > td,
+  .table > colgroup + thead > tr:first-child > td,
+  .table > thead:first-child > tr:first-child > td {
+    border-top: 0;
+  }
+  .table > tbody + tbody {
+    border-top: 2px solid #dddddd;
+  }
+.table-bordered {
+    border: 1px solid #dddddd;
+  }
+  .table-bordered > thead > tr > th,
+  .table-bordered > tbody > tr > th,
+  .table-bordered > tfoot > tr > th,
+  .table-bordered > thead > tr > td,
+  .table-bordered > tbody > tr > td,
+  .table-bordered > tfoot > tr > td {
+    border: 1px solid #dddddd;
+  }
+  .table-bordered > thead > tr > th,
+  .table-bordered > thead > tr > td {
+    border-bottom-width: 2px;
+  }
+
+  #togglebtn{
+    color: Black;
+    background-color: #ff4136;
+    
+  }
+
+  .btn{
+    color: #fff;
+    background-color: green;
+    border-radius: 3px;
+    padding: 5px;
+    min-width: 115px;
+  }
+
+  .btn:disabled{
+    color:lightgray;
+    background-color: grey;    
+    border-radius: 3px;
+    padding: 5px;
+    min-width: 115px;
+  }
